@@ -4,6 +4,11 @@ ORG 0H
 
 ORG 20H
 main:
+	MOV SP,#3FH
+	MOV R0,#30H
+	MOV R1,#3FH
+	JMP palin
+ss:
 	MOV SP,#30H
 	MOV R0,#10H
 	MOV R1,#0FH
@@ -47,4 +52,27 @@ swapbub:
 	;INC SP
 	JMP sw
 
+palin:
+	MOV A,#01H
+	MOV SP,#3FH
+	PUSH ACC
+	MOV A,R1
+	SUBB A,R0
+	JC ss
+	CLR C
+	MOV A,@R1
+	SUBB A,@R0
+	INC R0
+	DEC R1
+	JZ palin
+	JNZ notpalin
+	JMP ss
 	
+
+notpalin:
+	MOV A,#0FFH
+	MOV SP,#3FH
+	PUSH ACC
+	JMP ss
+
+
