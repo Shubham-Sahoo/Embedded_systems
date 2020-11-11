@@ -1,8 +1,7 @@
 ;sort data from RAM
 ORG 0H
-	JMP main
+	JMP main     ; Main function
 
-ORG 20H
 main:
 	; BCD Conversion
 	MOV R0,#30H  
@@ -41,6 +40,14 @@ ll:
 	MOV SP,#30H
 	MOV R1,#0FH
 	DJNZ R0,sort
+	MOV R0,#10H
+
+show:			; show the sorted output on LEDs
+	POP ACC		; Pop out the value to accumulator
+	MOV P1,A	; Copy it to LEDs port
+	INC SP		; Increase the stack by 2
+	INC SP
+	DJNZ R0,show ; Repeat for 16 values
 	JMP $
 
 ; Bubble-sort implementation
@@ -98,5 +105,3 @@ notpalin:
 	MOV SP,#3FH
 	PUSH ACC
 	JMP ss       ; Jump to sorting initialisation
-
-
