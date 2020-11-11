@@ -1,4 +1,4 @@
-
+main:
 	CLR SM0
 	SETB SM1
 	SETB REN
@@ -30,9 +30,7 @@
 
 again :
 	MOV A, @R0		
-	JZ read
-	;MOV C, P		
-	;MOV ACC.7, C	
+	JZ read	
 	MOV SBUF, A		
 	INC R0			
 	JNB TI, $		
