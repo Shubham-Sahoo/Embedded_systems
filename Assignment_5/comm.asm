@@ -10,7 +10,8 @@ main:
 	MOV TH1, #243
 	MOV TL1, #243
 	SETB TR1	
-
+	JMP read
+write:
 	MOV 40H, #'s'	
 	MOV 41H, #'h'		
 	MOV 42H, #'u'	
@@ -25,12 +26,15 @@ main:
 	MOV 4BH, #'o'
 	MOV 4CH, #'o'
 
-	MOV 4DH, #0		
-	MOV R0, #40H		
+	MOV R0, #40H	
+	MOV R2, #0DH
+	JMP again	
 
 again :
+	MOV A,R2
+	JZ read
+	DEC R2
 	MOV A, @R0		
-	JZ read	
 	MOV SBUF, A		
 	INC R0			
 	JNB TI, $		
@@ -51,4 +55,4 @@ skip:
 	INC R1			
 	JMP loop		
 finish:
-	JMP $			
+	JMP write		
